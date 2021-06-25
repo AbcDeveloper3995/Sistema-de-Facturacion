@@ -1,0 +1,117 @@
+{% extends 'list.html' %}
+{% load static %}
+
+{% block head %}
+{{ block.super }}
+      <link href="{% static 'lib/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'lib/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}"/>
+    <link rel="stylesheet" href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}"/>
+    <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'lib/moment-2.25.3/moment-with-locales.js' %}"></script>
+    <script src="{% static 'lib/bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/select2-4.0.13/js/i18n/es.js' %}"></script>
+    <script src="{% static 'sale/funciones.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+
+     <div class="row">
+    <div class="col-8">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">
+                {% if action == 'add' %}
+                        <i class="fas fa-plus"></i>
+                    {% else %}
+                        <i class="fas fa-edit"></i>
+                    {% endif %}
+
+                    {{ title }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label>Buscador de productos:</label>
+                <div class="input-group">
+                  <select class="form-control select2" style="width: 100%" name="search"></select>
+                </div>
+            </div>
+                  <hr>
+            <button class="btn-xs btn-danger btnRemoveAll" type="button"><i class="fas fa fa-trash"></i> Eliminar todos </button>
+            <br><br/>
+             <table class="table table-bordered" id="tblProductos">
+                <thead>
+                <tr>
+                    <th>Eliminar</th>
+                    <th>Producto</th>
+                    <th>Categoria</th>
+                    <th>PVP</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            {% block buttons_list %}
+                <button type="submit" class="btn btn-primary btn-flat btnTest">
+                    <i class="fas fa-plus"></i> Guardar registro
+                </button>
+            {% endblock %}
+        </div>
+    </div>
+    </div>
+    <div class="col-4">
+        <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="fas fa-shopping-cart"></i>
+                  Detalles de la venta
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <input type="hidden" name="action" value="{{ action }}">
+              <div class="card-body">
+                  <div class="form-group">
+                      <label>{{ form.date_joined.label }}</label>
+                      {{ form.date_joined }}
+                  </div>
+                  <div class="form-group">
+                      <label>{{ form.cli.label }}</label>
+                      {{ form.cli }}
+                  </div>
+                  <div class="form-group">
+                      <label>{{ form.subtotal.label }}</label>
+                      {{ form.subtotal }}
+                  </div>
+                  <div class="form-group">
+                      <label>{{ form.iva.label }}</label>
+                      {{ form.iva }}
+                  </div>
+                  <div class="form-group">
+                      <label>Iva calculado</label>
+                      <input type="text" class="form-control" readonly name="ivaCalculado">
+                  </div>
+                  <div class="form-group">
+                      <label>{{ form.total.label }}</label>
+                      {{ form.total }}
+                  </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+    </div>
+    </div>
+    </form>
+    <script>
+        vents.items.products = {{ det|safe }};
+        vents.list()
+    </script>
+{% endblock %}
